@@ -6,7 +6,7 @@ import time
 
 
 
-def run_tti_sim(model, T, 
+def run_tti_sim(model, T, zero_case_early_stopping=True,
                 intervention_start_pct_infected=0, average_introductions_per_day=0,
                 testing_cadence='everyday', pct_tested_per_day=1.0, test_falseneg_rate='temporal', 
                 testing_compliance_symptomatic=[None], max_pct_tests_for_symptomatics=1.0,
@@ -77,7 +77,7 @@ def run_tti_sim(model, T,
     running     = True
     while running:
 
-        running = model.run_iteration()
+        running = model.run_iteration() and (zero_case_early_stopping or model.t < model.tmax) # override early stopping in case of endogenours shocks
 
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         # Introduce exogenous exposures randomly:
