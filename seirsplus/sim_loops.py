@@ -77,7 +77,7 @@ def run_tti_sim(model, T, zero_case_early_stopping=True,
     running     = True
     while running:
 
-        running = model.run_iteration() and (zero_case_early_stopping or model.t < model.tmax) # override early stopping in case of endogenours shocks
+        running = (model.run_iteration() and zero_case_early_stopping) or model.t < model.tmax # override early stopping in case of endogenours shocks
 
         #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         # Introduce exogenous exposures randomly:
